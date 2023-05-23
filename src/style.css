@@ -10,6 +10,11 @@ body {
   padding: 15px;
 }
 
+.weather-info {
+  list-style: none;
+  display: flex;
+}
+
 a {
   text-decoration: none;
 }
