@@ -80,18 +80,17 @@ function showWeather(response) {
 
   function tempMetricCel(event) {
     event.preventDefault();
-    temperature.innerHTML = `${response.data.main.temp}`;
+    temperature.innerHTML = `${Math.round(response.data.main.temp)}`;
   }
 
   function tempMetricFar(event) {
     event.preventDefault();
-    let temperatureRounded = Math.round(response.data.main.temp)
-    temperature.innerHTML = `${temperatureRounded * 1.8 + 32}`;
+    temperature.innerHTML = `${Math.round(response.data.main.temp * 1.8 + 32)}`;
   }
 
   tempCel.addEventListener("click", tempMetricCel)
   tempFar.addEventListener("click", tempMetricFar)
-  temperature.innerHTML = `${response.data.main.temp}`;
+  temperature.innerHTML = `${Math.round(response.data.main.temp)}`;
 }
 
 function handleSubmit(event) {
@@ -99,7 +98,6 @@ function handleSubmit(event) {
 
   let searchFormInput = document.querySelector('#search-form-input')
   if (searchFormInput.value !== '') {
-    // setCityName(searchFormInput.value);
     searchCity(searchFormInput.value);
   }
 }

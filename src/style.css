@@ -1,4 +1,5 @@
 body {
+  font-family: 'Roboto', sans-serif;
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -17,4 +18,15 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.weather-info .card-body {
+  color: #899ebb;
+  font-size: 14px;
+}
+
+.weather-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #395e8b;
 }
