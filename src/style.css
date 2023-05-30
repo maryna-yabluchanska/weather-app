@@ -27,6 +27,22 @@ a {
 
 .weather-value {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: #395e8b;
+}
+
+.min-temp {
+  font-size: 12px;
+}
+
+.forcast-day h4 {
+  font-size: 14px;
+}
+
+.cityName {
+  text-align: left;
+}
+
+.forcast-day p {
+  margin-bottom: 5px;
 }

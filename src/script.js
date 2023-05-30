@@ -1,17 +1,18 @@
 //Change date
+let days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
 
 function formatDate() {
   let now = new Date();
   let dateHtml = document.querySelector('.date');
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
+
 
   let months = [
     "January",
@@ -59,6 +60,48 @@ function setCityName(cityProperty) {
   cityName.innerHTML = `${city}`;
 }
 
+function formatCurrentDate(timestamp) {
+  let date = new Date(timestamp * 1000)
+  let days = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
+  ];
+  let day = date.getDay()
+  return days[day];
+}
+
+function displayForecast(response) {
+  let forecastElement = document.querySelector('.forecast-section');
+  let forecast = response.data.daily;
+  let forecastHTML = `<div class="row">`;
+  forecast.forEach((day, index) => {
+    if (index < 5) {
+      forecastHTML = forecastHTML + `
+        <div class="col forcast-day">
+          <h4>${formatCurrentDate(day.time)}</h4>
+          <img src=${day.condition.icon_url} alt="weather ico" width="40">
+          <p>${Math.round(day.temperature.maximum)}°C</p>
+          <p class="min-temp">${Math.round(day.temperature.minimum)}°C</p>
+        </div>`
+    }
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+
+}
+
+function getForecast(city) {
+  let apiKey = 'fbbt3o5111665aab81dce0ebb30c7e4f';
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function showWeather(response) {
   let temperature = document.querySelector('.temperature')
   let weatherIco = document.querySelector('.weatherIco')
@@ -70,6 +113,7 @@ function showWeather(response) {
   let tempCel = document.querySelector('.tempCel')
   let tempFar = document.querySelector('.tempFar')
 
+  // displayForecast();
   setCityName(response.data.name)
   humidity.innerHTML = `${response.data.main.humidity}`;
   conditions.innerHTML = `${response.data.weather[0].description}`;
@@ -77,6 +121,7 @@ function showWeather(response) {
   visibility.innerHTML = `${response.data.visibility / 1000}`;
   wind.innerHTML = Math.round(response.data.wind.speed * 18 / 5);
   weatherIco.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
+  getForecast(response.data.name);
 
   function tempMetricCel(event) {
     event.preventDefault();
@@ -104,6 +149,7 @@ function handleSubmit(event) {
 
 function searchCity(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
   axios.get(apiUrl).then(showWeather);
 }
 
