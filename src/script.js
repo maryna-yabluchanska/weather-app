@@ -112,14 +112,18 @@ function showWeather(response) {
   let visibility = document.querySelector('.visibility ')
   let tempCel = document.querySelector('.tempCel')
   let tempFar = document.querySelector('.tempFar')
-
-  // displayForecast();
+  let weatherSection = document.querySelector('.weather-color-section')
   setCityName(response.data.name)
   humidity.innerHTML = `${response.data.main.humidity}`;
   conditions.innerHTML = `${response.data.weather[0].description}`;
   pressure.innerHTML = `${response.data.main.pressure}`;
   visibility.innerHTML = `${response.data.visibility / 1000}`;
   wind.innerHTML = Math.round(response.data.wind.speed * 18 / 5);
+  if (response.data.weather[0].id === 800) {
+    weatherSection.style.backgroundColor = '#bbc7d7';
+  } else if (response.data.weather[0].id === 300) {
+    weatherSection.style.backgroundColor = '#3b5d8b';
+  }
   weatherIco.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
   getForecast(response.data.name);
 
